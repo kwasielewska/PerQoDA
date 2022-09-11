@@ -9,7 +9,7 @@ Last update: 11.09.2022
 
 ## Description
 
-The PerQoDA software is designed to test the quality of a dataset using permutation testing. It requires labeled dataset.
+The PerQoDA software is designed to test the quality of a dataset using permutation testing. The method is based on the network clssification problem and requires labeled dataset.
 
 ### Output examples
 
