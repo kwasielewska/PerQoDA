@@ -13,11 +13,24 @@ The PerQoDA software is designed to test the quality of a dataset using permutat
 
 ### Output examples
 
-Score table visualisation and p-value table
+Score table visualisation
 
-<img src="https://user-images.githubusercontent.com/80593278/189529410-e1283080-e0c3-486a-ba80-bf15d4f7043d.PNG" width="100">
+<img src="https://user-images.githubusercontent.com/80593278/189529891-7bcf3b06-53f9-4689-8c5b-0acc9bbdea11.PNG" width="200">
 
-![ex1](https://user-images.githubusercontent.com/80593278/189529410-e1283080-e0c3-486a-ba80-bf15d4f7043d.PNG | width=100)
+p-value table
+
+<img src="https://user-images.githubusercontent.com/80593278/189529899-114fec92-fa71-49ed-9c73-fae8e850dedf.PNG" width="200">
+
+The slope
+
+<img src="https://user-images.githubusercontent.com/80593278/189529420-f1892abe-808b-46bc-9242-e01973cab686.PNG" width="200">
+
+...
+
+![ex1](https://user-images.githubusercontent.com/80593278/189529891-7bcf3b06-53f9-4689-8c5b-0acc9bbdea11.PNG)
+
+![ex1a](https://user-images.githubusercontent.com/80593278/189529899-114fec92-fa71-49ed-9c73-fae8e850dedf.PNG)
+
 
 ![ex2](https://user-images.githubusercontent.com/80593278/189529420-f1892abe-808b-46bc-9242-e01973cab686.PNG)
 
