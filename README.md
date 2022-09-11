@@ -17,18 +17,19 @@ You can use different ML supervised techniques and performnce metrics.
 
 Score table visualisation
 
-<img src="https://user-images.githubusercontent.com/80593278/189529891-7bcf3b06-53f9-4689-8c5b-0acc9bbdea11.PNG" width="400">
+<img src="https://user-images.githubusercontent.com/80593278/189530888-8c84dadd-ca49-42ab-a040-4208c3e092d1.PNG" width="400">
 
 p-value table
 
-<img src="https://user-images.githubusercontent.com/80593278/189529899-114fec92-fa71-49ed-9c73-fae8e850dedf.PNG" width="400">
+<img src="https://user-images.githubusercontent.com/80593278/189530895-880d6592-5ca1-4ac4-855a-f7ed384035f1.PNG" width="400">
 
 The slope
 
-<img src="https://user-images.githubusercontent.com/80593278/189529420-f1892abe-808b-46bc-9242-e01973cab686.PNG" width="400">
+<img src="https://user-images.githubusercontent.com/80593278/189530898-9039bbc5-c434-44af-98da-810e5bf08b5a.PNG" width="400">
 
 
-### Papers
+
+## Papers
 
 Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing. 7th IEEE/IFIP International Workshop on Analytics for Network and Service Management (AnNet), Budapest, 2022. 
 
