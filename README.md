@@ -11,7 +11,7 @@ Last update: 11.09.2022
 
 The PerQoDA software is designed to test the quality of a dataset using permutation testing. The method is based on the network clssification problem and requires labeled dataset.
 
-You can use different ML supervised techniques and performnce metrics.
+You can use different ML supervised techniques and performance metrics.
 
 ### Output examples
 
