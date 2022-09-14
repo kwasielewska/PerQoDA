@@ -1,0 +1,19 @@
+---
+dataset: "dohdata-part-chrome-01.csv"
+dataset_label: "doh"
+classifiers: 
+    - KNN
+    - DT
+    - RF
+    - AB
+    - XGB
+#    - MLP
+metrics:
+    - recall
+#    - F1
+#    - MCC
+#    - PTF
+#    - BAc
+verbose: "True"
+permutations: 100
+percentages: [50,25,10,5,1]
