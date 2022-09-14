@@ -1,5 +1,5 @@
 ---
-dataset: "dohdata-part-chrome-01.csv"
+dataset: "example-dohdata.csv"
 dataset_label: "doh"
 classifiers: 
     - KNN
