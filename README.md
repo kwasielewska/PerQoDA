@@ -36,4 +36,4 @@ Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks 
 Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
 
 ### More info
-We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods. Contact us if you need help.
+We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods ('python' folder).
