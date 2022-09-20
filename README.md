@@ -39,6 +39,33 @@ The permutation chart and the p-value table are complementary and fully informat
 
 <img src="https://user-images.githubusercontent.com/80593278/189530898-9039bbc5-c434-44af-98da-810e5bf08b5a.PNG" width="400">
 
+## Items in the folder and instructions
+
+### Python
+
+Python library
+
+#### Instalation 
+- Install modules localed in perqoda.py
+- For Weles use the local file (weles.zip) available in this repo
+
+#### How to run
+- Prepare your dataset (feature dataset)
+- Edit configuration file
+- Run the tool -> python3 perqoda.py
+
+### Jupyter
+
+Jupyter scripts  
+
+#### Instalation 
+- Install modules ... 
+- For Weles ...
+
+#### How to run
+- Prepare your dataset (feature dataset)
+- Edit second cell ...
+- Run notebook
 
 ## Papers
 
@@ -46,5 +73,19 @@ Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks 
 
 Katarzyna Wasielewska, Dominik SoukupDominik Soukup, Tomáš Čejka, Jose Camacho. Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
 
-### More info
+## More info
+
 We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods ('python' folder).
+
+## Copyright Note
+
+Copyright (C) 2022  Universidad de Granada
+Copyright (C) 2022  ??
+ 
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
