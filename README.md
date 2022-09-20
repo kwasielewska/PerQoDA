@@ -39,11 +39,11 @@ The permutation chart and the p-value table are complementary and fully informat
 
 <img src="https://user-images.githubusercontent.com/80593278/189530898-9039bbc5-c434-44af-98da-810e5bf08b5a.PNG" width="400">
 
-## Items in the folder and instructions
+## Content and instructions
 
 ### Python
 
-Python library
+Folder with python library
 
 #### Instalation 
 - Install modules localed in perqoda.py
@@ -56,7 +56,7 @@ Python library
 
 ### Jupyter
 
-Jupyter scripts  
+Folder with Jupyter scripts  
 
 #### Instalation 
 - Install modules ... 
@@ -80,6 +80,7 @@ We used the Weles tool published at https://github.com/w4k2/weles. Data shufflin
 ## Copyright Note
 
 Copyright (C) 2022  Universidad de Granada
+
 Copyright (C) 2022  ??
  
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
