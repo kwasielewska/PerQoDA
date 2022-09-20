@@ -3,37 +3,48 @@ Dataset Quality Assessment with Permutation Testing
 
 Contact person: Katarzyna Wasielewska, email: k.wasielewska@ugr.es
 
-Last update: 11.09.2022
+Last update: 20.09.2022
 
 <hr>
 
 ## Description
 
-The PerQoDA software is designed to test the quality of a dataset using permutation testing. The method is based on the network classification problem and requires a labeled dataset.
+The PerQoDA software is designed to test the quality of a dataset for classification tasks using permutation testing. The method requires a labeled dataset. The intuition is that in a good quality dataset, the association between predictors and the labelling should be strong and unique. Thus, everytime we permute the labels in a good quality dataset, a singificant reduction in the quality is expected. A main innovation is that we permute the labelling at different percentages, so that we can generate a grey scale of quality between bad datasets and good datasets.
 
-You can use a variety of supervised ML techniques and performance metrics.
+The software includes a variety of supervised ML techniques and performance metrics.
 
 ### Output examples
 
-Score table visualisation
+To assess the quality of a dataset, this package produces a number of useful visualizations:
 
+- The permutation chart. 
+
+Inspired by previous research on permutation testing (Lindgren et al. Journal of Chemometrics (1996) 10:521), this plot compares true vs permuted performance results in the y-axis while in the x-axis each permutation is located depending on the correlation between the original labeling and the permuted one. That way, resamples of 50\% of permuted labels are located around the 0.5 correlation, while those for 1\% are close to a correlation of 1. The true performance values obtained for each classifier are shown by diamonds. In principle, diamonds should be located at correlation level 1 in the abscissas, since the labelling is not permuted. However, for visualization purposes, we decided to locate them slightly separated at the right, also separated from permuted results. Each diamond is also attached to the horizontal line representing its corresponding (true) performance. The results of the performance calculated after each permutation are shown by circles. Circles with dark border represent permuted models with higher performance than the true one (diamonds).  The lowest performance of all permutes at different percentage levels is marked with a red dashed horizontal line. This provides a baseline of randomness, which can sometimes be unexpectedly high. 
+
+In the example, techniques like Adap or RF show several partially permuted models above the quality of the corresponding true model. However, we do find other techniques like KNN that attain a good performance which is also unique, in the sense that no permuted version of the model can attain it.  
+ 
 <img src="https://user-images.githubusercontent.com/80593278/189530888-8c84dadd-ca49-42ab-a040-4208c3e092d1.PNG" width="400">
 
-p-value table
+- The p-value table
+
+The permutation chart is not an optimal visualization for low-percentage permutes, located close to correlation 1. For this reason, we complement this visualization with the p-value table. P-values are also specially useful in Big datasets, where permutation percentages may go very low.  
+
+The table shows that some classifiers at all permutation levels reject the null hypothesis (p-values < 0.01). This means that there is a strong relationship between the observations and the true labels in the dataset, and any change to the labels tend to degrade the relationship, preventing classifiers from precisely classifying observations. 
 
 <img src="https://user-images.githubusercontent.com/80593278/189530895-880d6592-5ca1-4ac4-855a-f7ed384035f1.PNG" width="400">
 
-The slope
+- The slope
+
+The permutation chart and the p-value table are complementary and fully informative to assess the quality of a dataset. Unfortunately, they provide too much information if the goal is to compare the quality of two datasets. For instance, if we want to assess incremental improvements in the quality of the data. To provide a simpler quantification of dataset quality, we define the permutation slope, which corresponds to the slope of the regression line fitted to the points representing the performance results of the selected classifier (obtained after permutations) at different permutation levels. We obtain one slope per classifier, the largest of which is a measure of the dataset quality (in this case, slope = 0.7955).
 
 <img src="https://user-images.githubusercontent.com/80593278/189530898-9039bbc5-c434-44af-98da-810e5bf08b5a.PNG" width="400">
-
 
 
 ## Papers
 
 Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing. 7th IEEE/IFIP International Workshop on Analytics for Network and Service Management (AnNet), Budapest, 2022. 
 
-Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
+Katarzyna Wasielewska, Dominik SoukupDominik Soukup, Tomáš Čejka, Jose Camacho. Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
 
 ### More info
 We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods ('python' folder).
