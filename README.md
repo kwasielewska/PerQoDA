@@ -66,10 +66,10 @@ Items:
 1. Unpack Weles.zip on local disk
 2. Install the Weles from local folder, for example: pip install -e D:\weles-master
 3. In Jupyter Notebook, execute the following commands:
-   import sys
-   sys.path.append('D:\weles-master')
+   - import sys
+   - sys.path.append('D:\weles-master')
 and check that the path has been added to the PATH
-   print(sys.path) 
+   - print(sys.path) 
 - Install modules localed in the notebook
 
 #### How to run
@@ -81,7 +81,7 @@ and check that the path has been added to the PATH
 
 ## Papers
 
-Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing, IEEE/IFIP Network Operations and Management Symposium (NOMS), 2022, pp. 1-4, doi: 10.1109/NOMS54207.2022.9789767.
+Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing, IEEE/IFIP Network Operations and Management Symposium (NOMS), 2022, pp. 1-4, doi: 10.1109/NOMS54207.2022.9789767
 
 Wasielewska K., Soukup D., Čejka T., Camacho J., Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
 
