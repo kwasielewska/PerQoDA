@@ -3,7 +3,7 @@ Dataset Quality Assessment with Permutation Testing
 
 Contact person: Katarzyna Wasielewska, email: k.wasielewska@ugr.es
 
-Last update: 20.09.2022
+Last update: 29.09.2022
 
 <hr>
 
@@ -43,11 +43,11 @@ The permutation chart and the p-value table are complementary and fully informat
 
 ### Python
 
-Folder with python library
+Folder with python library: python
 
 #### Instalation 
+- Install Weles according to the instruction described below (weles.zip is available in this repo) 
 - Install modules localed in perqoda.py
-- For Weles use the local file (weles.zip) available in this repo
 
 #### How to run
 - Prepare your dataset (feature dataset)
@@ -55,38 +55,49 @@ Folder with python library
 - Run the tool -> python3 perqoda.py
 
 ### Jupyter
+Folder with Jupyter scripts: jupyter
 
-Folder with Jupyter scripts  
+Items:
+- PerQoDA.ipynb - core code
+- Examples: Example of dataset quality assessment with PerQoDA and the sample of the inSDN dataset
 
 #### Instalation 
-- Install modules ... 
-- For Weles ...
+- Install Weles:
+1. Unpack Weles.zip on local disk
+2. Install the Weles from local folder, for example: pip install -e D:\weles-master
+3. In Jupyter Notebook, execute the following commands:
+   import sys
+   sys.path.append('D:\weles-master')
+and check that the path has been added to the PATH
+   print(sys.path) 
+- Install modules localed in the notebook
 
 #### How to run
-- Prepare your dataset (feature dataset)
-- Edit second cell ...
+- Load your dataset (feature dataset)
+- Select classifiers and performance metric
+- Set the number of permutations and define the permutation policy (percentages of labels)
 - Run notebook
+
 
 ## Papers
 
-Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing. 7th IEEE/IFIP International Workshop on Analytics for Network and Service Management (AnNet), Budapest, 2022. 
+Camacho, J., Wasielewska, K., Dataset Quality Assessment in Autonomous Networks with Permutation Testing, IEEE/IFIP Network Operations and Management Symposium (NOMS), 2022, pp. 1-4, doi: 10.1109/NOMS54207.2022.9789767.
 
-Katarzyna Wasielewska, Dominik SoukupDominik Soukup, Tomáš Čejka, Jose Camacho. Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
+Wasielewska K., Soukup D., Čejka T., Camacho J., Dataset Quality Assessment with Permutation Testing Showcased on Network Traffic Datasets [TechRxiv' 22](https://www.techrxiv.org/articles/preprint/Dataset_Quality_Assessment_with_Permutation_Testing_Showcased_on_Network_Traffic_Datasets/20145539) 
 
 ## More info
 
-We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods ('python' folder).
+We used the Weles tool published at https://github.com/w4k2/weles. Data shuffling requires a slight modification of the original code by adding a protocol that supports shuffling methods (look at the 'python' folder).
 
 ## Copyright Note
 
 Copyright (C) 2022  Universidad de Granada
-
-Copyright (C) 2022  ??
+Copyright (C) 2022  José Camacho 
+Copyright (C) 2022  Katarzyna Wasielewska
+Copyright (C) 2022  Dominik Soukup
  
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
