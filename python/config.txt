@@ -1,7 +1,11 @@
 ---
+# Path to dataset you would like to test
 dataset: "Examples/inSDN_BFA_2200.csv"
+# Delimiter used in the CSV file with the datset
 delimiter: ","
+# Dataset label column name that is used for classification (y value)
 dataset_label: "Label"
+# Pool of classifiers used for evaluation
 classifiers: 
     - KNN
     - DT
@@ -9,13 +13,18 @@ classifiers:
     - AB
     - XGB
 #    - MLP
+# Pool of metrics used for evalution
 metrics:
     - recall
 #    - F1
 #    - MCC
 #    - PTF
 #    - BAc
+# Verbose levels for info and debug log. Available level 0, 1, 2 
 verbose_level: 0
+# Number of processes used for evalustion
 cores: 1
+# Number of permutation iterations
 permutations: 10
+# List of permutation levels - percentage of data that will be permuted
 percentages: [10,5,1]
