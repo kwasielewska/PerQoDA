@@ -1,6 +1,7 @@
 ---
-dataset: "example-dohdata.csv"
-dataset_label: "doh"
+dataset: "example/doh-sample.csv"
+delimiter: ","
+dataset_label: "is_doh"
 classifiers: 
     - KNN
     - DT
@@ -14,6 +15,6 @@ metrics:
 #    - MCC
 #    - PTF
 #    - BAc
-verbose: "True"
-permutations: 100
-percentages: [50,25,10,5,1]
+verbose_level: 0
+permutations: 5
+percentages: [5,1]
