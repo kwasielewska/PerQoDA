@@ -30,6 +30,7 @@ class PerQoDA:
         self.dataset_params = {}
         self.a = None
         self.eval_metrics = {}
+        self.metrics = {}
         self.perc = None
         self.perm = None
         self.corr = None
@@ -155,17 +156,17 @@ class PerQoDA:
         def F2_score(y_true, y_pred):
             return fbeta_score(y_true, y_pred, beta=2)
 
-        self.metrics_pool = {
+        metrics_pool = {
             "precision": precision_score,
             "recall": recall_score,
             "sensitivity/recall": sensitivity_score,
             "F1": f1_score,
             "BAc": balanced_accuracy_score,
-            "AP": average_precision_score
-            "specificity": specificity_score
-            "MCC": matthews_corrcoef
-            "ROC": roc_auc_score
-            "Acc": accuracy_score
+            "AP": average_precision_score,
+            "specificity": specificity_score,
+            "MCC": matthews_corrcoef,
+            "ROC": roc_auc_score,
+            "Acc": accuracy_score,
             "FPR": false_positive_rate,
             "TPR": true_positive_rate,
             "PTF": precision_from_tpr_fpr,

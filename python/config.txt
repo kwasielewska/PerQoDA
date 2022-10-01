@@ -1,7 +1,7 @@
 ---
-dataset: "example/doh-sample.csv"
+dataset: "Examples/inSDN_BFA_2200.csv"
 delimiter: ","
-dataset_label: "is_doh"
+dataset_label: "Label"
 classifiers: 
     - KNN
     - DT
