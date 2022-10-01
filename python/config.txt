@@ -5,6 +5,8 @@ dataset: "Examples/inSDN_BFA_2200.csv"
 delimiter: ","
 # Dataset label column name that is used for classification (y value)
 dataset_label: "Label"
+# Output directory
+output: "results"
 # Pool of classifiers used for evaluation
 classifiers: 
     - KNN

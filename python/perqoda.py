@@ -14,6 +14,7 @@ from pandas import read_csv
 from progress.bar import Bar
 from progressbar import progressbar
 from progress.spinner import MoonSpinner
+import os
 
 
 class PerQoDA:
@@ -35,9 +36,10 @@ class PerQoDA:
         self.perm = None
         self.corr = None
         self.nperm = None
+        self.output = None
 
     # Parse and load the configuration file
-    # TODO define additional values for static parameters - p-value treshold, output report directory (check/create directory as needed)
+    # TODO define additional values for static parameters - p-value treshold
     def loadConfig(self):
         config = None
         try:
@@ -62,6 +64,14 @@ class PerQoDA:
             np.seterr(all="ignore")
             warnings.filterwarnings("ignore")
             warnings.simplefilter('ignore', np.RankWarning)
+    def checkOutput(self):
+        try:
+            isdir = os.path.isdir(self.output)
+            if isdir == False:
+                os.mkdir(self.output)
+        except Exception as err:
+            print("Error: Unable to create or access output directory in path",self.ouput)
+            print("Full Error Message",err)
 
     # Load dataset
     def loadDataset(self):
@@ -284,7 +294,7 @@ class PerQoDA:
         plt.axis([-0.05, 1.2, 0, 1.1])
 
         # Save permutation chart
-        plt.savefig("results/permutation-chart.png")
+        plt.savefig(self.output+"/permutation-chart.png")
 
         pv = pd.DataFrame(data=pvalues, index=list(classifiers), columns=self.perc)
 
@@ -293,7 +303,7 @@ class PerQoDA:
 
         # Save p-value table
         pv.style.applymap(significant)
-        dfi.export(pv, "results/pvalues.png")
+        dfi.export(pv, self.output+"/pvalues.png")
 
         # Get slope chart
         names = classifiers
@@ -317,7 +327,7 @@ class PerQoDA:
             slopes = np.append(slopes, slope)
 
         plt.legend(names, prop={'size': 8})
-        plt.savefig("results/slope-chart.png")
+        plt.savefig(self.output+"/slope-chart.png")
         maxind = np.argmax(abs(slopes))
         if self.verbose >= 1:
             print('Slope:', np.max(abs(slopes)), '-', names[maxind])
@@ -351,6 +361,6 @@ if __name__ == "__main__":
     qod.load()
     qod.prepareRun()
     qod.run()
-    print("Evaluation Completed! You find your results in ./results directory.")
+    print("Evaluation Completed! You find your results in"+self.output+" directory.")
 
  
