@@ -16,5 +16,6 @@ metrics:
 #    - PTF
 #    - BAc
 verbose_level: 0
-permutations: 5
-percentages: [5,1]
+cores: 1
+permutations: 10
+percentages: [10,5,1]

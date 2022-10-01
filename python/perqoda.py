@@ -6,12 +6,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import matplotlib.cm as cm
-from multiprocessing import Pool, Process, Manager
+from multiprocessing import Pool, Process, Manager, current_process
 import dataframe_image as dfi
 import yaml
 from yaml.loader import SafeLoader
 from pandas import read_csv
-from multiprocessing import Pool
 from progress.bar import Bar
 from progressbar import progressbar
 from progress.spinner import MoonSpinner
@@ -30,13 +29,14 @@ class PerQoDA:
         self.y1 = None
         self.dataset_params = {}
         self.a = None
-        self.metrics = {}
+        self.eval_metrics = {}
         self.perc = None
         self.perm = None
         self.corr = None
         self.nperm = None
 
     # Parse and load the configuration file
+    # TODO define additional values for static parameters - p-value treshold, output report directory (check/create directory as needed)
     def loadConfig(self):
         config = None
         try:
@@ -49,11 +49,12 @@ class PerQoDA:
         self.filename = config["dataset"] 
         self.label = config["dataset_label"]
         self.clfs = config["classifiers"]
-        self.metrics = config["metrics"]
+        self.eval_metrics = config["metrics"]
         self.verbose = int(config["verbose_level"])
         self.nperm = config["permutations"]
         self.perc = config["percentages"]
         self.delimiter = config["delimiter"]
+        self.cores = config["cores"]
         
         # Disable debug messages for lower verbose levels (1,2)
         if self.verbose <= 1:
@@ -107,7 +108,7 @@ class PerQoDA:
         from sklearn.neural_network import MLPClassifier
 
         # Pool of available models for selected pool of classifiers
-        pool = {
+        clfs_pool = {
                 "KNN": KNeighborsClassifier(),
                 "DT": DecisionTreeClassifier(),
                 "RF": RandomForestClassifier(),
@@ -117,35 +118,15 @@ class PerQoDA:
         }
         
         for classifier in self.clfs:
-            print("testing classifier", classifier)
-            self.clfs_ver1.append({classifier: pool[classifier]})
-            self.clfs_ver2[classifier] = pool[classifier]
+            self.clfs_ver1.append({classifier: clfs_pool[classifier]})
+            self.clfs_ver2[classifier] = clfs_pool[classifier]
 
-        #print()
-        # self.clfs = [
-        #        {"KNN": KNeighborsClassifier()},
-        #        {"DT": DecisionTreeClassifier()},
-        #        {"RF": RandomForestClassifier()},
-        #        #{"MLP": MLPClassifier(hidden_layer_sizes=(80,100), activation='relu', batch_size=20, max_iter=200, verbose=1)},
-        #        {"AB": AdaBoostClassifier()},
-        #        {"XGB": XGBClassifier(use_label_encoder=False, scale_pos_weight=self.dataset_params["ratio"])}
-        #]
-        #self.clfs2 = {
-        #        "KNN": KNeighborsClassifier(),
-        #        "DT": DecisionTreeClassifier(),
-        #        "RF": RandomForestClassifier(),
-        #        #{"MLP": MLPClassifier(hidden_layer_sizes=(80,100), activation='relu', batch_size=20, max_iter=200, verbose=1)},
-        #        "AB": AdaBoostClassifier(),
-        #        "XGB": XGBClassifier(use_label_encoder=False, scale_pos_weight=self.dataset_params["ratio"])
-        #}
 
     # Initialize metrics and set true values
-    # TODO implement metric seletion based on the configuration file
     def runMetrics(self):
         from sklearn.metrics import precision_score, f1_score, balanced_accuracy_score, average_precision_score, matthews_corrcoef, roc_auc_score, accuracy_score, fbeta_score, recall_score
         from imblearn.metrics import sensitivity_score, specificity_score
 
-        #self.ev = ws.evaluation.Evaluator(datasets=self.datasets, protocol2=(False, 2, None)).process(clfs=classifier, verbose=0)
         self.ev = ws.evaluation.Evaluator(datasets=self.datasets, protocol2=(False, 2, None)).process(clfs=self.clfs_ver2, verbose=0)
 
         def true_positive_rate(y_true, y_pred):
@@ -173,23 +154,26 @@ class PerQoDA:
 
         def F2_score(y_true, y_pred):
             return fbeta_score(y_true, y_pred, beta=2)
-            
-        self.metrics = {
-            #"precision": precision_score,
+
+        self.metrics_pool = {
+            "precision": precision_score,
             "recall": recall_score,
-            #"sensitivity/recall": sensitivity_score,
-            #"F1": f1_score,
-            #"BAc": balanced_accuracy_score,
-            #"AP": average_precision_score
-            #"specificity": specificity_score
-            #"MCC": matthews_corrcoef
-            #"ROC": roc_auc_score
-            #"Acc": accuracy_score
-            #"FPR": false_positive_rate,
-            #"TPR": true_positive_rate,
-            #"PTF": precision_from_tpr_fpr,
-            #"F2": F2_score
+            "sensitivity/recall": sensitivity_score,
+            "F1": f1_score,
+            "BAc": balanced_accuracy_score,
+            "AP": average_precision_score
+            "specificity": specificity_score
+            "MCC": matthews_corrcoef
+            "ROC": roc_auc_score
+            "Acc": accuracy_score
+            "FPR": false_positive_rate,
+            "TPR": true_positive_rate,
+            "PTF": precision_from_tpr_fpr,
+            "F2": F2_score
         }
+
+        for metric in self.eval_metrics:
+            self.metrics[metric] = metrics_pool[metric]
 
         scores = self.ev.score(metrics=self.metrics)
 
@@ -200,6 +184,7 @@ class PerQoDA:
         self.corr = np.zeros((self.nperm,len(self.perc)))
 
         # Main testing loop
+        # TODO improve paralel processing - each clasifier will be evaluted completely separately
         with Bar('Evaluating Dataset Quality...',max=self.nperm*len(self.perc)) as bar:
             for i in range(self.nperm):
                 for j in range(len(self.perc)):
@@ -233,24 +218,25 @@ class PerQoDA:
                     "all": (self.X1, y1P)
                     }
 
-                    # Parallel processing of each classifier
-                    with Pool(5) as p:
-                        eval_scores = p.map(self.evaluate, self.clfs_ver1)
-                        #print(results)
+                    ## Non-paralel version of classifier evaluation
+                    #evP = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(True, 2, None)).process(clfs=self.clfs_ver2, verbose=0)
+                    #scores = evP.score(metrics=self.metrics)
+                    #self.perm[i,j,:] = evP.scores.mean(axis=2)[:, :, 0]
+                    #kk = np.corrcoef(y1P,self.y1)
+                    #self.corr[i,j] = kk[0,1]
                     
-
-                    #evP = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(True, 2, None)).process(clfs=self.clfs_ver22, verbose=0)
-                    #print("matrix values......")
+                    ## Paralel version of classifier evaluation
+                    with Pool(self.cores) as p:
+                        eval_scores = p.map(self.evaluate, self.clfs_ver1)
                     tmp_scores = np.zeros((1, len(self.clfs_ver1)))
                     for idx, item in enumerate(eval_scores):
                         tmp_scores[0][idx] = item[0]
-
                     self.perm[i,j,:] = tmp_scores 
                     kk = np.corrcoef(y1P,self.y1)
                     self.corr[i,j] = kk[0,1]
+
                     bar.next()
                     
-                
     # Helper function for parallel processing
     def evaluate(self,classifier):
         evP2 = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(True, 2, None)).process(clfs=classifier, verbose=0)
