@@ -58,6 +58,7 @@ class PerQoDA:
         self.perc = config["percentages"]
         self.delimiter = config["delimiter"]
         self.cores = config["cores"]
+        self.output = config["output"]
         
         # Disable debug messages for lower verbose levels (1,2)
         if self.verbose <= 1:
@@ -68,7 +69,12 @@ class PerQoDA:
         try:
             isdir = os.path.isdir(self.output)
             if isdir == False:
+                if self.verbose >= 1:
+                    print("Unbable to find output directory. Creating a new one.")
                 os.mkdir(self.output)
+            else:
+                if self.verbose >= 1:
+                    print("Output directory already exists. ")
         except Exception as err:
             print("Error: Unable to create or access output directory in path",self.ouput)
             print("Full Error Message",err)
@@ -361,6 +367,6 @@ if __name__ == "__main__":
     qod.load()
     qod.prepareRun()
     qod.run()
-    print("Evaluation Completed! You find your results in"+self.output+" directory.")
+    print("Evaluation Completed! You find your results in "+qod.output+" directory.")
 
  

@@ -27,6 +27,6 @@ verbose_level: 0
 # Number of processes used for evalustion
 cores: 1
 # Number of permutation iterations
-permutations: 10
+permutations: 100
 # List of permutation levels - percentage of data that will be permuted
-percentages: [10,5,1]
+percentages: [50,25,10,5,1,0.1]
