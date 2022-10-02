@@ -303,6 +303,10 @@ class PerQoDA:
         plt.savefig(self.output+"/permutation-chart.png")
 
         pv = pd.DataFrame(data=pvalues, index=list(classifiers), columns=self.perc)
+        if self.verbose >= 0:
+            print("##### Results #####")
+            print("P-value table")
+            print(pv)
 
         def significant(v):
             return "font-weight: bold; color: red" if v > 0.01 else None
@@ -335,7 +339,8 @@ class PerQoDA:
         plt.legend(names, prop={'size': 8})
         plt.savefig(self.output+"/slope-chart.png")
         maxind = np.argmax(abs(slopes))
-        if self.verbose >= 1:
+        if self.verbose >= 0:
+            print("Max Slope")
             print('Slope:', np.max(abs(slopes)), '-', names[maxind])
 
     # Wrapper function to load configuration file and dataset
@@ -343,6 +348,8 @@ class PerQoDA:
         with MoonSpinner('Initializing Configuration...') as bar:
             bar.next()
             self.loadConfig()
+            bar.next()
+            self.checkOutput()
             bar.next()
             self.loadDataset()
             bar.next()
@@ -367,6 +374,7 @@ if __name__ == "__main__":
     qod.load()
     qod.prepareRun()
     qod.run()
-    print("Evaluation Completed! You find your results in "+qod.output+" directory.")
+    print("Evaluation Completed! Detailed results are in "+qod.output+" directory.")
+    print("#####")
 
  
