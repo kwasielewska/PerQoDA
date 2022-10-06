@@ -236,7 +236,7 @@ class PerQoDA:
                     }
 
                     ## Non-paralel version of classifier evaluation
-                    #evP = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(True, 2, None)).process(clfs=self.clfs_ver2, verbose=0)
+                    #evP = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(False, 2, None)).process(clfs=self.clfs_ver2, verbose=0)
                     #scores = evP.score(metrics=self.metrics)
                     #self.perm[i,j,:] = evP.scores.mean(axis=2)[:, :, 0]
                     #kk = np.corrcoef(y1P,self.y1)
@@ -256,7 +256,7 @@ class PerQoDA:
                     
     # Helper function for parallel processing
     def evaluate(self,classifier):
-        evP2 = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(True, 2, None)).process(clfs=classifier, verbose=0)
+        evP2 = ws.evaluation.Evaluator(datasets=self.datasetsP,protocol2=(False, 2, None)).process(clfs=classifier, verbose=0)
         scores = evP2.score(metrics=self.metrics)
         return evP2.scores.mean(axis=2)[:, :, 0][0]
 
