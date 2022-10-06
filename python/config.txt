@@ -10,10 +10,10 @@ output: "results2"
 # Pool of classifiers used for evaluation
 classifiers: 
     - KNN
-    - DT
     - RF
     - AB
-    - XGB
+#    - DT
+#    - XGB
 #    - MLP
 # Pool of metrics used for evalution
 metrics:
