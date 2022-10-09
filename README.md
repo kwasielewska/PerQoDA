@@ -47,7 +47,7 @@ Folder with python library: python
 
 #### Instalation 
 - Install Weles according to the instruction described below (weles.zip is available in this repo) 
-- Install modules localed in perqoda.py
+- Install modules localed in perqoda.py - pip3 install -r requirements.txt
 
 #### How to run
 - Prepare your dataset (feature dataset)
@@ -64,7 +64,7 @@ Items:
 #### Instalation 
 - Install Weles:
 1. Unpack Weles.zip on local disk
-2. Install the Weles from local folder, for example: pip install -e D:\weles-master
+2. Install the Weles from local folder, for example: pip install -e D:\weles-master, or unzip it the python/jupyter directory for local import of Weles module
 3. In Jupyter Notebook, execute the following commands:
    - import sys
    - sys.path.append('D:\weles-master')

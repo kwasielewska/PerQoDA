@@ -6,7 +6,7 @@ delimiter: ","
 # Dataset label column name that is used for classification (y value)
 dataset_label: "Label"
 # Output directory
-output: "results2"
+output: "results"
 # Pool of classifiers used for evaluation
 classifiers: 
     - KNN

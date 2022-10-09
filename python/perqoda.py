@@ -15,7 +15,8 @@ from progress.bar import Bar
 from progressbar import progressbar
 from progress.spinner import MoonSpinner
 import os
-
+import argparse
+import sys
 
 class PerQoDA:
 
@@ -40,14 +41,16 @@ class PerQoDA:
 
     # Parse and load the configuration file
     # TODO define additional values for static parameters - p-value treshold
-    def loadConfig(self):
+    def loadConfig(self,configFile):
         config = None
         try:
-            with open('config.txt') as f:
+            with open(configFile) as f:
                 config = yaml.load(f, Loader=SafeLoader)
         except Exception as err:
+            print()
             print("Error: Unable to read the configuration file. Please check formating or file access.")
             print("Full Error Message",err)
+            sys.exit(1)
 
         self.filename = config["dataset"] 
         self.label = config["dataset_label"]
@@ -76,24 +79,30 @@ class PerQoDA:
                 if self.verbose >= 1:
                     print("Output directory already exists. ")
         except Exception as err:
+            print()
             print("Error: Unable to create or access output directory in path",self.ouput)
             print("Full Error Message",err)
+            sys.exit(2)
 
     # Load dataset
     def loadDataset(self):
         try:
             self.raw_dataset = pd.read_csv(filepath_or_buffer=self.filename, sep=self.delimiter)
         except Exception as err:
+            print()
             print("Error: Unable to read input dataset. Please check formating or file access.")
             print("Full Error Message",err)
+            sys.exit(2)
 
         try:
             self.y1 = self.raw_dataset[self.label]
             self.X1 = self.raw_dataset.drop(columns=[self.label])
             self.X1 = MinMaxScaler().fit_transform(self.X1)
         except ValueError as err:
+            print()
             print("Error: convert string value to number.")
             print("Full Error Message:",err)
+            sys.exit(2)
 
         self.datasets = {
             "all": (self.X1, self.y1)
@@ -344,10 +353,10 @@ class PerQoDA:
             print('Slope:', np.max(abs(slopes)), '-', names[maxind])
 
     # Wrapper function to load configuration file and dataset
-    def load(self):
+    def load(self, configFile):
         with MoonSpinner('Initializing Configuration...') as bar:
             bar.next()
-            self.loadConfig()
+            self.loadConfig(configFile)
             bar.next()
             self.checkOutput()
             bar.next()
@@ -370,8 +379,17 @@ class PerQoDA:
 
 # Main
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Dataset Quality Assessment with Permutation Testing')
+    parser.add_argument("-c",
+                    "--config",
+                    help="Configuration file",
+                    type=str,
+                    default="config.txt")
+    args = parser.parse_args()
+    configFile=vars(args)["config"]
+
     qod = PerQoDA()
-    qod.load()
+    qod.load(configFile)
     qod.prepareRun()
     qod.run()
     print("Evaluation Completed! Detailed results are in "+qod.output+" directory.")
