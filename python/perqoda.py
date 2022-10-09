@@ -17,6 +17,7 @@ from progress.spinner import MoonSpinner
 import os
 import argparse
 import sys
+import pickle
 
 class PerQoDA:
 
@@ -62,6 +63,7 @@ class PerQoDA:
         self.delimiter = config["delimiter"]
         self.cores = config["cores"]
         self.output = config["output"]
+        self.save = config["save"]
         
         # Disable debug messages for lower verbose levels (1,2)
         if self.verbose <= 1:
@@ -352,6 +354,19 @@ class PerQoDA:
             print("Max Slope")
             print('Slope:', np.max(abs(slopes)), '-', names[maxind])
 
+    # Picle object with permuted evaluation data
+    def saveResults(self):
+        try:
+            with open(self.output+"/perqoda.obj", "wb") as f:
+                pickle.dump(self, f)
+        except Exception as err:
+            print()
+            print("Error: Failed to save PerQoDA object in "+self.output+" directory.")
+            print("Full Error:",err)
+            sys.exit(3)
+        if self.verbose >=1:
+            print("PerQoDA object saved to pickle file - "+self.output+"/perqoda.obj")
+
     # Wrapper function to load configuration file and dataset
     def load(self, configFile):
         with MoonSpinner('Initializing Configuration...') as bar:
@@ -376,6 +391,20 @@ class PerQoDA:
     def run(self):
         self.permutation()
         self.printResults()
+        if self.save == True:
+            self.saveResults()
+
+# Load picled object of with permuted evalution data
+def loadResults(filename):
+    try:
+        with open(filename, "rb") as f:
+            qod = pickle.load(f)
+            return qod
+    except Exception as err:
+        print()
+        print("Error: Unable to read the configuration file "+filename+". Please check formating or file access.")
+        print("Full Error Message",err)
+        sys.exit(1)
 
 # Main
 if __name__ == "__main__":
@@ -385,14 +414,23 @@ if __name__ == "__main__":
                     help="Configuration file",
                     type=str,
                     default="config.txt")
+    parser.add_argument("-l",
+                    "--load",
+                    help="Load pickled results",
+                    type=str,
+                    default=None)
     args = parser.parse_args()
-    configFile=vars(args)["config"]
 
-    qod = PerQoDA()
-    qod.load(configFile)
-    qod.prepareRun()
-    qod.run()
-    print("Evaluation Completed! Detailed results are in "+qod.output+" directory.")
-    print("#####")
+    if vars(args)["load"] == None:
+        configFile=vars(args)["config"]
+        qod = PerQoDA()
+        qod.load(configFile)
+        qod.prepareRun()
+        qod.run()
+        print("Evaluation Completed! Detailed results are in "+qod.output+" directory.")
+        print("#####")
+    else:
+        qod = loadResults(vars(args)["load"])
+        qod.printResults()
 
  

@@ -7,6 +7,8 @@ delimiter: ","
 dataset_label: "Label"
 # Output directory
 output: "results"
+# Save PeQoDA results after permutation in pickled file
+save: True
 # Pool of classifiers used for evaluation
 classifiers: 
     - KNN

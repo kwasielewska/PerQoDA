@@ -47,12 +47,13 @@ Folder with python library: python
 
 #### Instalation 
 - Install Weles according to the instruction described below (weles.zip is available in this repo) 
-- Install modules localed in perqoda.py - pip3 install -r requirements.txt
+- Install modules localed in perqoda.py, e.g., pip3 install -r requirements.txt
 
 #### How to run
 - Prepare your dataset (feature dataset)
 - Edit configuration file
-- Run the tool -> python3 perqoda.py
+- Run the tool -> python3 perqoda.py -c <path to configuration file>
+- Check dataset results in the output directory (defined in configuration file)
 
 ### Jupyter
 Folder with Jupyter scripts: jupyter
