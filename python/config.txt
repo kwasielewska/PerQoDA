@@ -6,14 +6,16 @@ delimiter: ","
 # Dataset label column name that is used for classification (y value)
 dataset_label: "Label"
 # Output directory
-output: "results2"
+output: "results"
+# Save PeQoDA results after permutation in pickled file
+save: True
 # Pool of classifiers used for evaluation
 classifiers: 
     - KNN
-    - DT
     - RF
     - AB
-    - XGB
+#    - DT
+#    - XGB
 #    - MLP
 # Pool of metrics used for evalution
 metrics:
