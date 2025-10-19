@@ -3,7 +3,7 @@ Dataset Quality Assessment with Permutation Testing
 
 Contact person: Katarzyna Wasielewska, email: k.wasielewska@ugr.es
 
-Last update: 13.10.2022
+Last update: 19.10.2025
 
 <hr>
 
